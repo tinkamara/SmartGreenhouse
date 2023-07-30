@@ -19,14 +19,8 @@ class SmartHomeFrame(ttk.Frame):
         self.room_list_frame_label = tk.Label(self.room_list_frame, text="Rooms")
         self.room_list_frame_label.grid(row=1, column=1, sticky="w")
 
-        self.room_listbox = tk.Listbox(self.room_list_frame, width=30, exportselection=False)
-        self.room_listbox.grid(row=2, column=2, padx=10, pady=5, rowspan=5)
-
-        self.add_room_button = tk.Button(self.room_list_frame, text="Add Room", width=15)
-        self.add_room_button.grid(row=2, column=1, padx=10, pady=5, sticky="w")
-
-        self.remove_room_button = tk.Button(self.room_list_frame, text="Remove Room", width=15)
-        self.remove_room_button.grid(row=6, column=1, padx=10, pady=5, sticky="w")
+        self.room_listbox = tk.Listbox(self.room_list_frame, width=30, exportselection=False, selectmode=tk.SINGLE)
+        self.room_listbox.grid(row=2, column=1, padx=10, pady=5, rowspan=5)
 
         # elements in "second" column, currently empty
         self.room_details_frame = tk.Frame(self, width=200)
@@ -39,19 +33,8 @@ class SmartHomeFrame(ttk.Frame):
         self.device_list_frame_label = tk.Label(self.device_list_frame, text="Devices")
         self.device_list_frame_label.grid(row=1, column=1, sticky="w")
 
-        self.device_listbox = tk.Listbox(self.device_list_frame, width=30, exportselection=False)
+        self.device_listbox = tk.Listbox(self.device_list_frame, width=30, exportselection=False, selectmode=tk.SINGLE)
         self.device_listbox.grid(row=2, column=2, padx=10, pady=5, rowspan=5)
-
-        self.remove_device_button = tk.Button(self.device_list_frame, text="Remove Device")
-        self.remove_device_button.grid(row=2, column=1, padx=10, pady=5)
-
-        self.device_type_var = tk.StringVar()
-        self.device_type_combobox = ttk.Combobox(self.device_list_frame, textvariable=self.device_type_var,
-                                                 state="readonly")
-        self.device_type_combobox.grid(row=4, column=1, padx=10, pady=5)
-
-        self.add_device_button = tk.Button(self.device_list_frame, text="Add Device")
-        self.add_device_button.grid(row=6, column=1, padx=10, pady=5)
 
         # elements in "fourth" column, currently empty
         self.device_details_frame = tk.Frame(self, width=200)
