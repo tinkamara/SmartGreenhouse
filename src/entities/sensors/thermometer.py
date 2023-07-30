@@ -1,6 +1,6 @@
-from random import random
+import random
 
-from src.abstract_model.sensor import Sensor
+from src.entities.abstract.sensor.sensor import Sensor
 
 
 class Thermometer(Sensor):
@@ -21,7 +21,8 @@ class Thermometer(Sensor):
     def raise_value(self, value):
         self.temperature += value
 
-    def random_value_change(self, value):
-        self.temperature += random(-2, -1, 0, 1, 2)
+    def random_value_change(self):
+        values = [-2, -1, 0, 1, 2]
+        self.temperature += random.choice(values)
 
 

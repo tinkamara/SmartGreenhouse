@@ -1,6 +1,6 @@
-from random import random
+import random
 
-from src.abstract_model.sensor import Sensor
+from src.entities.abstract.sensor.sensor import Sensor
 
 
 class AirHumiditySensor(Sensor):
@@ -13,9 +13,20 @@ class AirHumiditySensor(Sensor):
 
     def lower_value(self, value):
         self.air_humidity -= value
+        self.check_value()
 
     def raise_value(self, value):
         self.air_humidity += value
+        self.check_value()
 
-    def random_value_change(self, value):
-        self.air_humidity += random(-2, -1, 0, 1, 2)
+    def random_value_change(self):
+        values = [-2, -1, 0, 1, 2]
+        self.air_humidity += random.choice(values)
+        self.check_value()
+
+    def check_value(self):
+        if self.air_humidity > 100:
+            self.air_humidity = 100
+        elif self.air_humidity < 0:
+            self.air_humidity = 0
+

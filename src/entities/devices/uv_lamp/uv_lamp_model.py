@@ -1,19 +1,14 @@
 
 from src.entities.abstract.binary_device.binary_device_model import BinaryDeviceModel
 from src.entities.abstract.scalable_device.scalable_device_model import ScalableDeviceModel
+from src.utilities.log import Log
 
 
-class UVLampModel(ScalableDeviceModel, BinaryDeviceModel):
+class UVLampModel(ScalableDeviceModel):
 
     def __init__(self):
         self.is_on = False
         self.brightness = 0
-
-    def turn_on(self):
-        self.is_on = True
-
-    def turn_off(self):
-        self.is_on = False
 
     def scale_device(self, value):
         self.brightness = value
@@ -21,4 +16,5 @@ class UVLampModel(ScalableDeviceModel, BinaryDeviceModel):
             self.brightness = 100
         elif self.brightness < 0:
             self.brightness = 0
+        Log.write_to_log('UV-Lampe auf ' + str(self.brightness) + '% eingestellt', 1)
 

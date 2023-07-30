@@ -1,14 +1,14 @@
-from src.abstract_model.device_model import Device
-
 from src.entities.abstract.device.device_model import DeviceModel
+from src.entities.layout.greenhouse.greenhouse_model import GreenhouseModel
 from src.exceptions.not_enough_water_in_tank_Exception import NotEnoughWaterInTankException
-from utilities.log import Log
+from src.utilities.log import Log
 
 
 class IrrigationModel(DeviceModel):
 
-    def __init__(self, water_tank):
-        self.water_tank: WaterTank = water_tank
+    def __init__(self):
+        greenhouse = GreenhouseModel()
+        self.water_tank = greenhouse.water_tank
 
     def water_plant(self):
         try:

@@ -1,7 +1,9 @@
-from abc import abstractmethod, ABC
+from abc import abstractmethod
+
+from src.entities.abstract.device.device_model import DeviceModel
 
 
-class Sensor(ABC):
+class Sensor(DeviceModel):
 
     @abstractmethod
     def get_value(self):
@@ -16,5 +18,5 @@ class Sensor(ABC):
         pass
 
     @abstractmethod
-    def random_value_change(self, value):
+    def random_value_change(self):
         pass
