@@ -197,4 +197,3 @@ class SmartGreenhouseAppController:
         selected_greenhouse_zone_plant_device = self.get_selected_value(self.view_smart_greenhouse_tab.greenhouse_zone_listbox)
         self.update_greenhouse_zone_plant_device_list()
         self.select_element_by_value(self.view_smart_greenhouse_tab.greenhouse_zone_listbox,selected_greenhouse_zone_plant_device)
-        
