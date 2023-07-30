@@ -1,18 +1,17 @@
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 
+from src.entities.layout.zone.zone_model import ZoneModel
+
+
 class Room:
     def __init__(self, name):
         self.name = name
         self.devices = []
 
-class GreenhouseZone:
-    def __init__(self, name):
-        self.name = name
-        self.devices = []
-        self.plants = []
 
-class SmartHomeAppController:
+
+class SmartGreenhouseAppController:
     def __init__(self, model, view):
         self.model = model
         self.view = view
@@ -149,8 +148,9 @@ class SmartHomeAppController:
         greenhouse_zone_name = simpledialog.askstring("New Greenhouse Zone", "Enter the name for the new greenhouse_zone:")
         if greenhouse_zone_name:
             if not self.greenhouse_zone_name_exists(greenhouse_zone_name):
-                self.model.greenhouse_zones.append(GreenhouseZone(greenhouse_zone_name))
+                self.model.greenhouse_zones.append(ZoneModel(greenhouse_zone_name))
                 self.view.smart_greenhouse_tab.greenhouse_zone_listbox.insert(tk.END, f"{greenhouse_zone_name}")
+                self.update_greenhouse_zone_details()  # Rufe die Methode auf, um die Details der ausgewählten Zone anzuzeigen
 
     def greenhouse_zone_name_exists(self, new_greenhouse_zone_name):
         for greenhouse_zone in self.model.greenhouse_zones:

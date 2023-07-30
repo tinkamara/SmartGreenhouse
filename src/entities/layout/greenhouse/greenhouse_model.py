@@ -1,3 +1,7 @@
+from src.entities.devices.lamp.lamp_model import Lamp
+from src.entities.devices.water_tank.water_tank_model import WaterTank
+from src.entities.layout.zone.zone_model import ZoneModel
+
 
 class GreenhouseModel:
     _instance = None

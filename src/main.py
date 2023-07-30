@@ -1,13 +1,14 @@
-from src.entities.devices.uv_lamp.uv_lamp_model import UVLampModel
-from src.entities.devices.uv_lamp.uv_lamp_view import UVLampView
-from src.factorys.device_factory import DeviceFactory
+from src.entities.layout.greenhouse.greenhouse_model import GreenhouseModel
+from src.gui.smart_greenhouse_app import SmartGreenhouseApp
+import tkinter as tk
+
+from src.gui.smart_greenhouse_app_controller import SmartGreenhouseAppController
 
 if __name__ == "__main__":
+  #  root = tk.Tk()
+  #  app = SmartGreenhouseApp(root)
+  #  app.set_controller(SmartGreenhouseAppController(app, app))
+  #  root.mainloop()
 
-    device_factory = DeviceFactory()
-    uv_lamp = device_factory.create_uv_lamp()
-    device_factory.start_threads()
-    uvlamp = uv_lamp.model
-    view = uv_lamp.view
-
+  greenhouse = GreenhouseModel()
 

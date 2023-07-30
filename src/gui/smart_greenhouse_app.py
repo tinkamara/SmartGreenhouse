@@ -1,9 +1,11 @@
 import tkinter as tk
 
 from tkinter import ttk
-from log_frame import LogFrame
-from smart_greenhouse_frame import SmartGreenhouseFrame
-from smart_home_frame import SmartHomeFrame
+
+from src.gui.log_frame import LogFrame
+from src.gui.smart_greenhouse_frame import SmartGreenhouseFrame
+from src.gui.smart_home_frame import SmartHomeFrame
+
 
 class SmartGreenhouseApp(ttk.Frame):
     def __init__(self, root):
@@ -29,7 +31,3 @@ class SmartGreenhouseApp(ttk.Frame):
     def set_controller(self, controller):
         self.controller = controller
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = SmartGreenhouseApp(root)
-    root.mainloop()
