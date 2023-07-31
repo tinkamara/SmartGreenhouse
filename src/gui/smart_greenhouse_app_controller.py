@@ -285,6 +285,20 @@ class SmartGreenhouseAppController:
 
     def handle_model_change(self):
 
+        zone_names = [zone["name"] for zone in self.current_data["greenhouse_zones"]]
+        for zone in self.model.zones:
+            if zone.name not in zone_names:
+                self.model.zones.remove(zone)
+
+        current_zones = [zone for zone in self.current_data["greenhouse_zones"]]
+        for zone in self.model.zones:
+            for obj in current_zones:
+                if obj["name"]==zone.name:
+                    current_plants = [plant["name"] for plant in obj["plants"]]
+                    for plant in zone.plants:
+                        if plant.name not in current_plants:
+                            zone.plants.remove(plant)
+
         # Smart Home Tab
         selected_room = self.get_selected_value(self.view.smart_home_tab.room_listbox)
         self.update_room_list()
