@@ -18,12 +18,11 @@ class TelevisionModel(BinaryDeviceModel, ScalableDeviceModel):
             self.volume = 100
         elif self.volume < 0:
             self.volume = 0
-        Log.write_to_log('Fernseher auf Lautstärke ' + str(self.volume) + '% eingestellt', 1)
+
 
     def turn_on(self):
         self.is_on = True
-        Log.write_to_log('Fernseher eingeschaltet', 1)
+
 
     def turn_off(self):
         self.is_on = False
-        Log.write_to_log('Fernseher ausgeschaltet', 1)

@@ -17,5 +17,4 @@ class UVLampModel(ScalableDeviceModel):
             self.brightness = 100
         elif self.brightness < 0:
             self.brightness = 0
-        Log.write_to_log('UV-Lampe auf ' + str(self.brightness) + '% eingestellt', 1)
 

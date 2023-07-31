@@ -15,4 +15,4 @@ class FanModel(ScalableDeviceModel):
             self.power = 100
         elif self.power < 0:
             self.power = 0
-        Log.write_to_log('Luefter auf ' + str(self.power) + '% eingestellt', 1)
+

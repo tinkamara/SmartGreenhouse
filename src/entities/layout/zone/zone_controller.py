@@ -24,7 +24,6 @@ class ZoneController:
     def control_devices(self):
         while self.running:
 
-            Log.write_to_log(str(self.zone_model.name), 1)
             current_temperature = self.zone_model.thermometer.get_value()
             current_air_humidity = self.zone_model.air_humidity_sensor.get_value()
 
@@ -32,19 +31,30 @@ class ZoneController:
             if current_temperature < self.zone_model.ideal_temperature:
                 self.zone_model.heater.scale_device(10)
                 self.zone_model.thermometer.raise_value(1)
+                Log.write_to_log("Heizung in " + str(self.zone_model.name) + " auf " + str(
+                    self.zone_model.heater.power) + "% erhoeht", 1)
             else:
                 self.zone_model.heater.scale_device(-100)
+                Log.write_to_log(
+                    "Heizung in " + str(self.zone_model.name) + " ausgeschaltet",
+                    1)
 
             if current_temperature > self.zone_model.ideal_temperature:
                 self.zone_model.fan.scale_device(10)
                 self.zone_model.thermometer.lower_value(1)
                 self.zone_model.air_humidity_sensor.lower_value(1)
+                Log.write_to_log(
+                    "Luefter in " + str(self.zone_model.name) + " auf " + str(self.zone_model.fan.power) + "% erhoeht",
+                    1)
             else:
                 self.zone_model.heater.scale_device(-100)
+                Log.write_to_log("Luefter in " + str(self.zone_model.name) + " ausgeschaltet",
+                1)
 
             if current_air_humidity < self.zone_model.ideal_air_humidity:
                 self.zone_model.water_dispenser.dispense_water()
                 self.zone_model.air_humidity_sensor.raise_value(5)
+                Log.write_to_log("Wasser in " + str(self.zone_model.name) + " versprueht", 1)
 
             self.zone_model.air_humidity_sensor.random_value_change()
             time.sleep(10)
