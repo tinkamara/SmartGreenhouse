@@ -5,7 +5,8 @@ from src.utilities.log import Log
 class FanModel(ScalableDeviceModel):
 
     def __init__(self):
-        self.is_on = False
+        self.name = "Lüfter"
+        self.type = "LF"
         self.power = 50
 
     def scale_device(self, value):

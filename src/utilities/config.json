@@ -1,11 +1,14 @@
 {
   "rooms": [
     {
-      "name": "Wohnzimmer"
-
+      "name": "Wohnzimmer",
+      "ideal_air_humidity": 30,
+      "ideal_temperature": 23
     },
     {
-      "name": "Schlafzimmer"
+      "name": "Schlafzimmer",
+      "ideal_air_humidity": 50,
+      "ideal_temperature": 18
     }
   ],
   "greenhouse_zones": [

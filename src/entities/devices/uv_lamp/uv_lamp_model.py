@@ -9,6 +9,8 @@ class UVLampModel(ScalableDeviceModel):
     def __init__(self):
         self.is_on = False
         self.brightness = 0
+        self.name = "UV-Licht"
+        self.type = "UV"
 
     def scale_device(self, value):
         self.brightness = value

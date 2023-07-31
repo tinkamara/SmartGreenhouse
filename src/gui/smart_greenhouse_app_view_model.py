@@ -14,14 +14,27 @@ class SmartGreenhouseAppViewModel:
         # attributes to hide on auto-generated forms
         self.hidden_attributes = [
             "devices",
+            "television",
+            "heater",
+            "fan",
+            "uv_lamp",
+            "lamp",
+            "irrigation",
+            "water_dispenser",
+            "fertilizer",
         ]
 
         # dictionary for attribute to label text translation
         self.attribute_labels = {
             "name": "Name",
             "type": "Type",
-            "temperature": "Temperature",
+            "ideal_temperature": "Idealtemperatur",
+            "ideal_soil_humidity": "Ideale Bodenfeuchte",
+            "ideal_air_humidity": "Ideale Luftfeuchtigkeit",
             "humidity": "Humidity",
+            "air_humidity_sensor": "Aktuelle Luftfeuchtigkeit",
+            "thermometer": "Aktuelle Temperatur",
+            "soil_humidity_sensor": "Bodenfeuchtigkeit"
         }
 
     def update_view_model(self, rooms, greenhouse_zones):

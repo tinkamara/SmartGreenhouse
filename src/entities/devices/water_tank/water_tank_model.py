@@ -5,6 +5,8 @@ class WaterTank:
 
     def __init__(self):
         self.water_level = 50
+        self.name = "Wassertank"
+        self.type = "WT"
 
     def take_water(self, amount: int):
         if (self.water_level - amount) >= 0:
