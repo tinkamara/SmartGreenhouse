@@ -9,9 +9,10 @@ from src.entities.sensors.thermometer import Thermometer
 class ZoneModel:
 
     def __init__(self, name: str, ideal_temperature: int, ideal_air_humidity: int, thermometer: Thermometer, air_humidity_sensor: AirHumiditySensor,
-                 heater: HeaterModel, fan: FanModel, lamp: Lamp, water_dispenser: WaterDispenserModel):
+                 heater: HeaterModel, fan: FanModel, lamp: Lamp, water_dispenser: WaterDispenserModel, devices: []):
         self.name = name
         self.plants = []
+        self.devices = devices
         self.ideal_temperature = ideal_temperature
         self.ideal_air_humidity: int = ideal_air_humidity
         self.thermometer: Thermometer = thermometer

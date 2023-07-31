@@ -1,0 +1,70 @@
+{
+  "rooms": [
+    {
+      "name": "Wohnzimmer"
+
+    },
+    {
+      "name": "Schlafzimmer"
+    }
+  ],
+  "greenhouse_zones": [
+    {
+      "name": "Beerenzone",
+      "ideal_air_humidity": 50,
+      "ideal_temperature": 30,
+      "plants": [
+        {
+          "name": "Tomaten",
+          "type": "Tomato",
+          "ideal_soil_humidity": 40,
+          "uv_lamp_scale": 80
+        },
+        {
+          "name": "Gurken",
+          "type": "Cucumber",
+          "ideal_soil_humidity": 70,
+          "uv_lamp_scale": 30
+        }
+      ]
+    },
+    {
+      "name": "Gemuesezone",
+      "ideal_air_humidity": 30,
+      "ideal_temperature": 22,
+      "plants": [
+        {
+          "name": "Kuerbis",
+          "type": "Pumpkin",
+          "ideal_soil_humidity": 40,
+          "uv_lamp_scale": 20
+        },
+        {
+          "name": "Zucchini",
+          "type": "Zucchini",
+          "ideal_soil_humidity": 60,
+          "uv_lamp_scale": 30
+        }
+      ]
+    },
+    {
+      "name": "Exotenzone",
+      "ideal_air_humidity": 80,
+      "ideal_temperature": 40,
+      "plants": [
+        {
+          "name": "Ananas",
+          "type": "Pineapple",
+          "ideal_soil_humidity": 90,
+          "uv_lamp_scale": 90
+        },
+        {
+          "name": "Bambus",
+          "type": "Bamboo",
+          "ideal_soil_humidity": 90,
+          "uv_lamp_scale": 80
+        }
+      ]
+    }
+  ]
+}

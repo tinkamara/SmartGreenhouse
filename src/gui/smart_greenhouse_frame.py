@@ -52,8 +52,8 @@ class SmartGreenhouseFrame(ttk.Frame):
         self.greenhouse_zone_plant_listbox.grid(row=2, column=1, padx=10, pady=5, rowspan=5)
 
         # elements in "second" column, currently empty
-        self.greenhouse_zone_details_frame = tk.Frame(self, width=200)
-        self.greenhouse_zone_details_frame.grid(row=2, column=2, padx=10, pady=5)
+        self.greenhouse_zone_plant_details_frame = tk.Frame(self, width=200)
+        self.greenhouse_zone_plant_details_frame.grid(row=2, column=2, padx=10, pady=5)
 
         # elements in "third" column
         self.greenhouse_zone_plant_device_list_frame = tk.Frame(self, width=200)
