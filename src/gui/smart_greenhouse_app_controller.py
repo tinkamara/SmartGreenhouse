@@ -42,8 +42,6 @@ class SmartGreenhouseAppController:
         # Smart Greenhouse Zones Tab
         # Row 1: Zones and Zone Devices
         self.view.smart_greenhouse_tab.greenhouse_zone_listbox.bind("<<ListboxSelect>>", self.update_greenhouse_zone_details)
-        self.view.smart_greenhouse_tab.greenhouse_zone_listbox.bind("<<ListboxSelect>>",
-                                                                    self.update_greenhouse_zone_plant_list)
         self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.bind("<<ListboxSelect>>", self.update_greenhouse_zone_device_details)
 
         # Row 2: Plants and Plant Devices
@@ -72,6 +70,10 @@ class SmartGreenhouseAppController:
         self.view.smart_home_tab.device_listbox.delete(0, tk.END)
         if room:
             for device in room.devices:
+                if not hasattr(device, 'type'):
+                    device.type = device.__class__.__name__
+                if not hasattr(device, 'name'):
+                    device.name = device.type
                 self.view.smart_home_tab.device_listbox.insert(tk.END, f"{device.name} <{device.type}>")
 
     def update_room_device_details(self, event):
@@ -97,7 +99,6 @@ class SmartGreenhouseAppController:
             self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_details_frame, selected_greenhouse_zone)
             self.update_greenhouse_zone_device_list(selected_greenhouse_zone)
             self.update_greenhouse_zone_plant_list(selected_greenhouse_zone)
-            self.update_greenhouse_zone_plant_device_list(selected_greenhouse_zone)
         else:
             self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_details_frame)
 
@@ -105,18 +106,22 @@ class SmartGreenhouseAppController:
         self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.delete(0, tk.END)
         if greenhouse_zone:
             for device in greenhouse_zone.devices:
-                self.view.smart_greenhouse_tab.device_listbox.insert(tk.END, f"{device.name} <{device.type}>")
+                if not hasattr(device, 'type'):
+                    device.type = device.__class__.__name__
+                if not hasattr(device, 'name'):
+                    device.name = device.type
+                self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.insert(tk.END, f"{device.name} <{device.type}>")
 
     def update_greenhouse_zone_device_details(self, event):
         selected_index = self.view.smart_greenhouse_tab.greenhouse_zone_listbox.curselection()
         if selected_index:
             selected_greenhouse_zone = self.model.zones[selected_index[0]]
-            selected_index = self.view.smart_greenhouse_tab.device_listbox.curselection()
+            selected_index = self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.curselection()
             if selected_index:
                 selected_device = selected_greenhouse_zone.devices[selected_index[0]]
-                self.generate_form(self.view.smart_greenhouse_tab.device_details_frame, selected_device)
+                self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_device_details_frame, selected_device)
 
-    def update_greenhouse_zone_plant_list(self, event=None, greenhouse_zone=None):
+    def update_greenhouse_zone_plant_list(self, greenhouse_zone=None):
         self.view.smart_greenhouse_tab.greenhouse_zone_plant_listbox.delete(0, tk.END)
         self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_plant_details_frame)
         self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_plant_device_details_frame)
@@ -134,12 +139,17 @@ class SmartGreenhouseAppController:
             if selected_index:
                 selected_plant = selected_greenhouse_zone.plants[selected_index[0]]
                 self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_plant_details_frame, selected_plant)
+                self.update_greenhouse_zone_plant_device_list(selected_plant)
 
     def update_greenhouse_zone_plant_device_list(self, greenhouse_zone_plant=None):
         self.view.smart_greenhouse_tab.greenhouse_zone_plant_device_listbox.delete(0, tk.END)
         self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_plant_details_frame)
         if greenhouse_zone_plant:
             for device in greenhouse_zone_plant.devices:
+                if not hasattr(device, 'type'):
+                    device.type = device.__class__.__name__
+                if not hasattr(device, 'name'):
+                    device.name = device.type
                 self.view.smart_greenhouse_tab.greenhouse_zone_plant_device_listbox.insert(tk.END,
                                                                                            f"{device.name} <{device.type}>")
 
@@ -215,8 +225,6 @@ class SmartGreenhouseAppController:
         self.update_room_list()
         self.select_element_by_value(self.view.smart_home_tab.room_listbox, selected_room)
         selected_device = self.get_selected_value(self.view.smart_home_tab.device_listbox)
-        selected_device = 'test'
-        print(selected_device)
         self.update_room_device_list()
         self.select_element_by_value(self.view.smart_home_tab.device_listbox, selected_device )
 
