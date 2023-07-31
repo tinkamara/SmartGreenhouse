@@ -39,8 +39,8 @@ class ZoneController:
             self.zone_model.air_humidity_sensor.random_value_change()
             time.sleep(10)
 
-    def add_plant(self, name, type: str, i_soil_humidity):
-        plant_controller = PlantFactory.create_plant(name, type, self.zone_model, i_soil_humidity)
+    def add_plant(self, name, type: str, i_soil_humidity, uv_lamp_scale):
+        plant_controller = PlantFactory.create_plant(name, type, self.zone_model, i_soil_humidity, uv_lamp_scale)
         self.zone_model.plants.append(plant_controller.plant_model)
 
     def start(self):
