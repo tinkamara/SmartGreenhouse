@@ -46,3 +46,24 @@ class SmartGreenhouseAppViewModel:
 
     def append_zone(self, zone: ZoneModel):
         self.zones.append(zone)
+
+    def remove_zone(self, zone_name):
+        value_to_remove = zone_name
+        index_to_remove = None
+        for index, obj in enumerate(self.zones):
+            if obj.name == value_to_remove:
+                index_to_remove = index
+
+        if index_to_remove is not None:
+            self.zones.pop(index_to_remove)
+
+    def remove_room(self, room_name):
+        value_to_remove = room_name
+        index_to_remove = None
+        for index, obj in enumerate(self.rooms):
+            if obj.name == value_to_remove:
+                index_to_remove = index
+
+        if index_to_remove is not None:
+            self.rooms.pop(index_to_remove)
+

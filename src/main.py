@@ -11,4 +11,5 @@ if __name__=='__main__':
     model = SmartGreenhouseAppViewModel(None, None, None)
     controller = SmartGreenhouseAppController(model, app)
     app.set_controller(controller)
+    app.update_config()
     root.mainloop()

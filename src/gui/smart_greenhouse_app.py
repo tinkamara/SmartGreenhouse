@@ -27,7 +27,10 @@ class SmartGreenhouseApp(ttk.Frame):
 
         # set the controller late inside controller's __init__
         self.controller = None
-    
+
     def set_controller(self, controller):
         self.controller = controller
 
+    def update_config(self):
+        self.controller.update_config()
+        self.root.after(10000, self.update_config)
