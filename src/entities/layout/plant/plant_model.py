@@ -6,15 +6,18 @@ from src.entities.sensors.soil_humidity_sensor import SoilHumiditySensor
 
 
 class PlantModel:
-    def __init__(self, name: str, zone: ZoneModel, ideal_soil_humidity: int, soil_humidity_sensor: SoilHumiditySensor, fertilizer: FertilizerModel,
-                 irrigation: IrrigationModel, uv_lamp: UVLampModel):
+    def __init__(self, name: str, type: str, zone: ZoneModel, ideal_soil_humidity: int, uv_lamp_scale: int, soil_humidity_sensor: SoilHumiditySensor, fertilizer: FertilizerModel,
+                 irrigation: IrrigationModel, uv_lamp: UVLampModel, devices: []):
         self.name = name
+        self.type = type
         self.zone = zone
+        self.devices = devices
         self.uv_lamp: UVLampModel = uv_lamp
         self.fertilizer: FertilizerModel = fertilizer
         self.irrigation: IrrigationModel = irrigation
         self.soil_humidity_sensor: SoilHumiditySensor = soil_humidity_sensor
         self.ideal_soil_humidity: int = ideal_soil_humidity
+        self.uv_lamp_scale = uv_lamp_scale
 
         # Methode zum Erhöhen der idealen Bodenfeuchtigkeit um einen bestimmten Wert
     def increase_ideal_soil_humidity(self, increment: int):
