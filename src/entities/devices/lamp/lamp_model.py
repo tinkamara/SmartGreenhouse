@@ -11,8 +11,8 @@ class Lamp(BinaryDeviceModel):
 
     def turn_on(self):
         self.is_on = True
-        Log.write_to_log('Lampe eingeschaltet', 1)
+
 
     def turn_off(self):
         self.is_on = False
-        Log.write_to_log('Lampe ausgeschaltet', 1)
+

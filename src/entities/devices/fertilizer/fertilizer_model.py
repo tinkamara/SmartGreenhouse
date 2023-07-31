@@ -21,6 +21,5 @@ class FertilizerModel(DeviceModel):
     def fertilize(self):
         if self.available_fertilizer > 0:
             self.available_fertilizer -= 1
-            Log.write_to_log('Pflanze geduengt. Noch verfuegbare Einheiten' + str(self.available_fertilizer), 1)
         else:
             raise NoFertilizerException()

@@ -14,7 +14,7 @@ class RoomController:
 
     def control_devices(self):
         while self.running:
-            Log.write_to_log(str(self.room_model.name), 1)
+
             current_temperature = self.room_model.thermometer.get_value()
             current_air_humidity = self.room_model.air_humidity_sensor.get_value()
 
@@ -22,21 +22,33 @@ class RoomController:
             if current_temperature < self.room_model.ideal_temperature:
                 self.room_model.heater.scale_device(10)
                 self.room_model.thermometer.raise_value(1)
+                Log.write_to_log("Heizung in " + str(self.room_model.name) + " auf " + str(self.room_model.heater.power) +  "% erhoeht", 1)
             else:
                 self.room_model.heater.scale_device(-100)
+                Log.write_to_log(
+                    "Heizung in " + str(self.room_model.name) + " ausgeschaltet",
+                    1)
 
 
             if current_temperature > self.room_model.ideal_temperature:
                 self.room_model.fan.scale_device(10)
                 self.room_model.thermometer.lower_value(1)
                 self.room_model.air_humidity_sensor.lower_value(1)
+                Log.write_to_log(
+                    "Luefter in " + str(self.room_model.name) + "  " + str(self.room_model.fan.power) + "% erhoeht",
+                    1)
             else:
                 self.room_model.heater.scale_device(-100)
+                Log.write_to_log(
+                    "Luefter in " + str(self.room_model.name) + " ausgeschaltet",
+                    1)
 
             if current_air_humidity < self.room_model.ideal_air_humidity:
                 self.room_model.water_dispenser.dispense_water()
                 self.room_model.air_humidity_sensor.raise_value(5)
-
+                Log.write_to_log(
+                    "Wasser in " + str(self.room_model.name) + " versprueht",
+                    1)
             self.room_model.air_humidity_sensor.random_value_change()
             time.sleep(10)
     def start(self):
