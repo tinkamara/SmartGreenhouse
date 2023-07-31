@@ -22,6 +22,9 @@ class SmartGreenhouseAppViewModel:
             "irrigation",
             "water_dispenser",
             "fertilizer",
+            "plants",
+            "water_tank",
+            "zone"
         ]
 
         # dictionary for attribute to label text translation

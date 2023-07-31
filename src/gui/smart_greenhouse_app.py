@@ -19,7 +19,7 @@ class SmartGreenhouseApp(ttk.Frame):
         # Tabs erstellen
         self.smart_home_tab = SmartHomeFrame(self.notebook)
         self.smart_greenhouse_tab = SmartGreenhouseFrame(self.notebook)
-        self.log_tab = LogFrame(self.notebook)
+        self.log_tab = LogFrame(self.notebook, "log.log")
 
         self.notebook.add(self.smart_home_tab, text="Smart Home")
         self.notebook.add(self.smart_greenhouse_tab, text="Smart Greenhouse")

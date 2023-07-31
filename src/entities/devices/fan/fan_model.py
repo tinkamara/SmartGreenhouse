@@ -10,7 +10,7 @@ class FanModel(ScalableDeviceModel):
         self.power = 50
 
     def scale_device(self, value):
-        self.power = value
+        self.power += value
         if self.power > 100:
             self.power = 100
         elif self.power < 0:

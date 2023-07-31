@@ -18,10 +18,12 @@ class TestPlantModel(unittest.TestCase):
         self.fertilizer_mock = Mock(spec=FertilizerModel)
         self.irrigation_mock = Mock(spec=IrrigationModel)
         self.uv_lamp_mock = Mock(spec=UVLampModel)
+        self.uv_lamp_scale = 50
+        self.devices = []
 
         # Erstelle eine Instanz der PlantModel-Klasse für jeden Testfall
-        self.plant = PlantModel("Testpflanze", self.zone_mock, 60, self.soil_humidity_sensor_mock,
-                                self.fertilizer_mock, self.irrigation_mock, self.uv_lamp_mock)
+        self.plant = PlantModel("Testpflanze", "Pflanze", self.zone_mock, 60, self.uv_lamp_scale, self.soil_humidity_sensor_mock,
+                                self.fertilizer_mock, self.irrigation_mock, self.uv_lamp_mock, self.devices)
 
     def test_initial_values(self):
         # Teste, ob die Attribute beim Initialisieren korrekt gesetzt werden

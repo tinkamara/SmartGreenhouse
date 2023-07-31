@@ -8,6 +8,9 @@ class Thermometer(Sensor):
     def __init__(self):
         self.temperature = 25
 
+    def __str__(self):
+        return str(self.temperature)
+
     def get_value(self):
         return self.temperature
 

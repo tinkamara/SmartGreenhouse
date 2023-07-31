@@ -29,7 +29,6 @@ class SmartGreenhouseAppController:
         for greenhouse_zone in self.current_data["greenhouse_zones"]:
             zone_controller = ZoneFactory.create_zone(greenhouse_zone["name"], greenhouse_zone["ideal_temperature"], greenhouse_zone["ideal_air_humidity"])
             self.model.append_zone(zone_controller.zone_model)
-            print("done")
             for plant in greenhouse_zone["plants"]:
                 zone_controller.add_plant(plant["name"], plant["type"], plant["ideal_soil_humidity"], plant["uv_lamp_scale"])
         self.handle_model_change()
@@ -54,9 +53,9 @@ class SmartGreenhouseAppController:
 
         for room_name, current_room in current_rooms.items():
             if room_name not in previous_rooms:
-                zone_controller = ZoneFactory.create_zone(room_name, current_room["ideal_temperature"],
+                room_controller = RoomFactory.create_room(room_name, current_room["ideal_temperature"],
                                                           current_room["ideal_air_humidity"])
-                self.model.append_zone(zone_controller.zone_model)
+                self.model.append_zone(room_controller.room_model)
 
 
         for room_name, previous_room in previous_rooms.items():

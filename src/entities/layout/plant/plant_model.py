@@ -26,3 +26,10 @@ class PlantModel:
         # Methode zum Verringern der idealen Bodenfeuchtigkeit um einen bestimmten Wert
     def decrease_ideal_soil_humidity(self, decrement: int):
         self.ideal_soil_humidity -= decrement
+
+    def increase_uv_lamp_scale(self, increment: int):
+        self.uv_lamp_scale += increment
+
+        # Methode zum Verringern der idealen Bodenfeuchtigkeit um einen bestimmten Wert
+    def decrease_uv_lamp_scale(self, decrement: int):
+        self.uv_lamp_scale -= decrement

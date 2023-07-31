@@ -8,6 +8,9 @@ class AirHumiditySensor(Sensor):
     def __init__(self):
         self.air_humidity = 25
 
+    def __str__(self):
+        return str(self.air_humidity)
+
     def get_value(self):
         return self.air_humidity
 

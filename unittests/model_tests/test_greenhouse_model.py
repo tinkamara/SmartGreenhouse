@@ -19,7 +19,7 @@ class TestGreenhouseModel(unittest.TestCase):
         zone = ZoneModel(name="Test Zone",
                          ideal_temperature=25, ideal_air_humidity=50,
                          thermometer=None, air_humidity_sensor=None,
-                         heater=None, fan=None, lamp=None, water_dispenser=None)
+                         heater=None, fan=None, lamp=None, water_dispenser=None, devices=None)
 
         self.greenhouse.zones.append(zone)
         self.assertIn(zone, self.greenhouse.zones)

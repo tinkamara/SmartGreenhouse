@@ -7,13 +7,12 @@ from src.utilities.log import Log
 class UVLampModel(ScalableDeviceModel):
 
     def __init__(self):
-        self.is_on = False
         self.brightness = 0
         self.name = "UV-Licht"
         self.type = "UV"
 
     def scale_device(self, value):
-        self.brightness = value
+        self.brightness += value
         if self.brightness > 100:
             self.brightness = 100
         elif self.brightness < 0:

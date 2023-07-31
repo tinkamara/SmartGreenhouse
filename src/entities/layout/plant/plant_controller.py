@@ -16,11 +16,17 @@ class PlantController:
 
     def control_devices(self):
         while self.running:
+            Log.write_to_log(str(self.plant_model.name),1)
             current_soil_humidity = self.plant_model.soil_humidity_sensor.get_value()
 
             if current_soil_humidity < self.plant_model.ideal_soil_humidity:
                 self.plant_model.irrigation.water_plant()
                 self.plant_model.soil_humidity_sensor.raise_value(10)
+
+            current_uv_scale = self.plant_model.uv_lamp.brightness
+
+            if current_uv_scale != self.plant_model.uv_lamp_scale:
+                self.plant_model.uv_lamp.brightness = self.plant_model.uv_lamp_scale
 
             self.call_ai()
 
@@ -45,10 +51,9 @@ class PlantController:
         if '021' in message:
             self.plant_model.zone.decrease_ideal_air_humidity(5)
         if '030' in message:
-            if callable(self.plant_model.uv_lamp.scale_device(1)):
-                self.plant_model.uv_lamp.scale_device(10)
+                self.plant_model.increase_uv_lamp_scale(10)
         if '031' in message:
-            self.plant_model.uv_lamp.scale_device(-10)
+            self.plant_model.decrease_uv_lamp_scale(10)
 
     def start(self):
         if not self.running:
