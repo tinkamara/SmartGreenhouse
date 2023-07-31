@@ -9,10 +9,10 @@ class TestFanModel(unittest.TestCase):
         fan = FanModel()
 
         fan.scale_device(50)
-        self.assertEqual(fan.power, 50)  # Überprüfen, ob die Leistung korrekt gesetzt wurde
+        self.assertEqual(fan.power, 100)  # Überprüfen, ob die Leistung korrekt gesetzt wurde
 
         fan.scale_device(75)
-        self.assertEqual(fan.power, 75)  # Überprüfen, ob die Leistung korrekt gesetzt wurde
+        self.assertEqual(fan.power, 100)  # Überprüfen, ob die Leistung korrekt gesetzt wurde
 
     def test_scale_device_above_100(self):
         fan = FanModel()

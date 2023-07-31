@@ -20,11 +20,12 @@ class TestZoneModel(unittest.TestCase):
         self.fan_mock = Mock(spec=FanModel)
         self.lamp_mock = Mock(spec=Lamp)
         self.water_dispenser_mock = Mock(spec=WaterDispenserModel)
+        self.devices = []
 
         # Erstelle eine Instanz der ZoneModel-Klasse für jeden Testfall
         self.zone = ZoneModel("Testzone", 25, 60, self.thermometer_mock,
                               self.air_humidity_sensor_mock, self.heater_mock, self.fan_mock,
-                              self.lamp_mock, self.water_dispenser_mock)
+                              self.lamp_mock, self.water_dispenser_mock, self.devices)
 
     def test_initial_values(self):
         # Teste, ob die Attribute beim Initialisieren korrekt gesetzt werden

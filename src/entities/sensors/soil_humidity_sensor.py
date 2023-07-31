@@ -7,6 +7,9 @@ class SoilHumiditySensor(Sensor):
     def __init__(self):
         self.soil_humidity = 25
 
+    def __str__(self):
+        return str(self.soil_humidity)
+
     def get_value(self):
         return self.soil_humidity
 
