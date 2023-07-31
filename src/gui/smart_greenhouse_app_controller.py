@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 
+from src.entities.layout.zone.zone_controller import ZoneController
 from src.factorys.plant_factory import PlantFactory
 from src.factorys.room_factory import RoomFactory
 from src.factorys.zone_factory import ZoneFactory
@@ -15,6 +16,7 @@ class SmartGreenhouseAppController:
         self.config_loader = ConfigLoader()
         self.current_data = self.config_loader.read_config()
         self.set_initial_config()
+        self.previous_data = self.current_data.copy()
 
     def set_initial_config(self):
 
@@ -29,28 +31,88 @@ class SmartGreenhouseAppController:
             self.model.append_zone(zone_controller.zone_model)
             print("done")
             for plant in greenhouse_zone["plants"]:
-                plant_controller = PlantFactory.create_plant(plant["name"], plant["type"], zone_controller.zone_model, plant["ideal_soil_humidity"], plant["uv_lamp_scale"])
                 zone_controller.add_plant(plant["name"], plant["type"], plant["ideal_soil_humidity"], plant["uv_lamp_scale"])
         self.handle_model_change()
 
-    def run(self):
-        print('1')
+    def update_config(self):
+        self.current_data = self.config_loader.read_config()
+        if self.current_data != self.previous_data:
+
+            if self.previous_data is not None:
+                self.compare_configurations()
+
+        # Aktualisiere den gespeicherten Inhalt mit dem aktuellen Inhalt
+        self.previous_data = self.current_data.copy()
+        self.handle_model_change()
+
+    def compare_configurations(self):
+        # Vergleiche die Räume
+
+        # Vergleiche die Räume
+        previous_rooms = {room["name"]: room for room in self.previous_data["rooms"]}
+        current_rooms = {room["name"]: room for room in self.current_data["rooms"]}
+
+        for room_name, current_room in current_rooms.items():
+            if room_name not in previous_rooms:
+                zone_controller = ZoneFactory.create_zone(room_name, current_room["ideal_temperature"],
+                                                          current_room["ideal_air_humidity"])
+                self.model.append_zone(zone_controller.zone_model)
+
+
+        for room_name, previous_room in previous_rooms.items():
+            if room_name not in current_rooms:
+                self.model.remove_room(room_name)
+
+        # Vergleiche die Gewächshauszonen
+        previous_zones = {zone["name"]: zone for zone in self.previous_data["greenhouse_zones"]}
+        current_zones = {zone["name"]: zone for zone in self.current_data["greenhouse_zones"]}
+
+        for zone_name, current_zone in current_zones.items():
+            zone_controller: ZoneController = None
+            if zone_name not in previous_zones:
+                zone_controller = ZoneFactory.create_zone(zone_name, current_zone["ideal_temperature"],
+                                                          current_zone["ideal_air_humidity"])
+                self.model.append_zone(zone_controller.zone_model)
+                for plant in current_zone["plants"]:
+                    zone_controller.add_plant(plant["name"], plant["type"], plant["ideal_soil_humidity"],
+                                              plant["uv_lamp_scale"])
+            else:
+                zone_controller = ZoneController.get_zone_controller_by_name(zone_name)
+                previous_zone = previous_zones[zone_name]
+                self.compare_plants(zone_controller, previous_zone["plants"], current_zone["plants"],
+                                    f"Pflanzen in Gewächshauszone '{zone_name}'")
+
+        for zone_name, previous_zone in previous_zones.items():
+            if zone_name not in current_zones:
+                self.model.remove_zone(zone_name)
+
+    def compare_plants(self, zone_controller, previous_plants, current_plants, heading):
+        for plant_name in current_plants:
+            if plant_name not in previous_plants:
+                current_plant = current_plants[plant_name]
+                zone_controller.add_plant(plant_name, current_plant["type"], current_plant["ideal_soil_humidity"], current_plant["uv_lamp_scale"])
+
+        for plant_name in previous_plants:
+            if plant_name not in current_plants:
+                zone_controller.remove_plant(plant_name)
 
     def bind_functions_to_view(self):
         # Smart Home Rooms Tab
-        self.view.smart_greenhouse_tab.greenhouse_zone_listbox.bind("<<ListboxSelect>>", self.update_room_details)
-        self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.bind("<<ListboxSelect>>", self.update_room_device_details)
+        self.view.smart_home_tab.room_listbox.bind("<<ListboxSelect>>", self.update_room_details)
+        self.view.smart_home_tab.device_listbox.bind("<<ListboxSelect>>", self.update_room_device_details)
 
         # Smart Greenhouse Zones Tab
         # Row 1: Zones and Zone Devices
-        self.view.smart_greenhouse_tab.greenhouse_zone_listbox.bind("<<ListboxSelect>>", self.update_greenhouse_zone_details)
-        self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.bind("<<ListboxSelect>>", self.update_greenhouse_zone_device_details)
+        self.view.smart_greenhouse_tab.greenhouse_zone_listbox.bind("<<ListboxSelect>>",
+                                                                    self.update_greenhouse_zone_details)
+        self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.bind("<<ListboxSelect>>",
+                                                                           self.update_greenhouse_zone_device_details)
 
         # Row 2: Plants and Plant Devices
         self.view.smart_greenhouse_tab.greenhouse_zone_plant_listbox.bind("<<ListboxSelect>>",
-                                                                    self.update_greenhouse_zone_plant_details)
-        self.view.smart_greenhouse_tab.greenhouse_zone_plant_listbox.bind("<<ListboxSelect>>",
-                                                     self.update_greenhouse_zone_plant_device_details)
+                                                                          self.update_greenhouse_zone_plant_details)
+        self.view.smart_greenhouse_tab.greenhouse_zone_plant_device_listbox.bind("<<ListboxSelect>>",
+                                                                                 self.update_greenhouse_zone_plant_device_details)
 
     def update_room_list(self, event=None):
         self.view.smart_home_tab.room_listbox.delete(0, tk.END)
@@ -112,7 +174,8 @@ class SmartGreenhouseAppController:
                     device.type = device.__class__.__name__
                 if not hasattr(device, 'name'):
                     device.name = device.type
-                self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.insert(tk.END, f"{device.name} <{device.type}>")
+                self.view.smart_greenhouse_tab.greenhouse_zone_device_listbox.insert(tk.END,
+                                                                                     f"{device.name} <{device.type}>")
 
     def update_greenhouse_zone_device_details(self, event):
         selected_index = self.view.smart_greenhouse_tab.greenhouse_zone_listbox.curselection()
@@ -145,7 +208,7 @@ class SmartGreenhouseAppController:
 
     def update_greenhouse_zone_plant_device_list(self, greenhouse_zone_plant=None):
         self.view.smart_greenhouse_tab.greenhouse_zone_plant_device_listbox.delete(0, tk.END)
-        self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_plant_details_frame)
+        self.generate_form(self.view.smart_greenhouse_tab.greenhouse_zone_plant_device_details_frame)
         if greenhouse_zone_plant:
             for device in greenhouse_zone_plant.devices:
                 if not hasattr(device, 'type'):
@@ -228,7 +291,7 @@ class SmartGreenhouseAppController:
         self.select_element_by_value(self.view.smart_home_tab.room_listbox, selected_room)
         selected_device = self.get_selected_value(self.view.smart_home_tab.device_listbox)
         self.update_room_device_list()
-        self.select_element_by_value(self.view.smart_home_tab.device_listbox, selected_device )
+        self.select_element_by_value(self.view.smart_home_tab.device_listbox, selected_device)
 
         # Smart Greenhouse Tab
         selected_greenhouse_zone = self.get_selected_value(self.view.smart_greenhouse_tab.greenhouse_zone_listbox)

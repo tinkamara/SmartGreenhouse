@@ -6,11 +6,19 @@ from src.factorys.plant_factory import PlantFactory
 
 
 class ZoneController:
+    controllers = []
+
+    @staticmethod
+    def get_zone_controller_by_name(zone_name):
+        for index, zone_controller in enumerate(ZoneController.controllers):
+            if zone_controller.zone_model.name == zone_name:
+                return zone_controller
 
     def __init__(self, zone_model: ZoneModel):
         self.zone_model: ZoneModel = zone_model
         self.running = False
         self.thread = None
+        ZoneController.controllers.append(self)
 
     def control_devices(self):
         while self.running:
@@ -42,6 +50,17 @@ class ZoneController:
     def add_plant(self, name, type: str, i_soil_humidity, uv_lamp_scale):
         plant_controller = PlantFactory.create_plant(name, type, self.zone_model, i_soil_humidity, uv_lamp_scale)
         self.zone_model.plants.append(plant_controller.plant_model)
+
+    def remove_plant(self, plant_name):
+        value_to_remove = plant_name
+        index_to_remove = None
+        for index, obj in enumerate(self.zone_model.plants):
+            if obj.name == value_to_remove:
+                index_to_remove = index
+
+        if index_to_remove is not None:
+            self.zone_model.plants.pop(index_to_remove)
+
 
     def start(self):
         if not self.running:
