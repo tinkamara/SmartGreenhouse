@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import simpledialog, messagebox
 
 from src.factorys.plant_factory import PlantFactory
+from src.factorys.room_factory import RoomFactory
 from src.factorys.zone_factory import ZoneFactory
 from src.utilities.config_loader import ConfigLoader
 
@@ -18,10 +19,10 @@ class SmartGreenhouseAppController:
     def set_initial_config(self):
 
         # Gib alle Informationen aus der Konfiguration aus
-     #   for room in self.current_data["rooms"]:
-       #     room_controller = RoomFactory(self, room["name"])
-      #      for device in room["devices"]:
-       #         print(f"\t{device['name']} <{device['type']}>")
+        for room in self.current_data["rooms"]:
+            room_controller = RoomFactory.create_room(room["name"], room["ideal_temperature"], room["ideal_air_humidity"])
+            self.model.append_room(room_controller.room_model)
+
 
         for greenhouse_zone in self.current_data["greenhouse_zones"]:
             zone_controller = ZoneFactory.create_zone(greenhouse_zone["name"], greenhouse_zone["ideal_temperature"], greenhouse_zone["ideal_air_humidity"])
@@ -177,8 +178,8 @@ class SmartGreenhouseAppController:
         row = 0  # row number for placement inside the widget
 
         for attr, value in obj.__dict__.items():
-           # if attr in self.model.hidden_attributes:
-            #    continue
+            if attr in self.model.hidden_attributes:
+                continue
             label_text = self.model.attribute_labels.get(attr, attr)
             label_var = tk.StringVar(value=f"{label_text}:")
             label = tk.Label(form_frame, textvariable=label_var, anchor="w")

@@ -7,6 +7,8 @@ class HeaterModel(ScalableDeviceModel):
 
     def __init__(self):
         self.power: int = 50
+        self.name = "Heizung"
+        self.type = "HZ"
 
     def scale_device(self, value):
         self.power += value

@@ -10,6 +10,8 @@ class WaterDispenserModel(DeviceModel):
         from src.entities.layout.greenhouse.greenhouse_model import GreenhouseModel
         greenhouse = GreenhouseModel()
         self.water_tank = greenhouse.water_tank
+        self.name = "Luftbefeuchter"
+        self.type = "Luft"
 
     def dispense_water(self):
         try:

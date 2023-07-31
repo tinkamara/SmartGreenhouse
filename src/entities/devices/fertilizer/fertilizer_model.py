@@ -8,6 +8,8 @@ class FertilizerModel(DeviceModel):
 
     def __init__(self):
         self.available_fertilizer: int = 500
+        self.name = "Dünger"
+        self.type = "D"
 
     def get_available_fertilizer(self):
         return self.available_fertilizer

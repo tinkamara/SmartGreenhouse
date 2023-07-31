@@ -9,6 +9,8 @@ class IrrigationModel(DeviceModel):
     def __init__(self):
         greenhouse = GreenhouseModel()
         self.water_tank = greenhouse.water_tank
+        self.name = "Bewässerung"
+        self.type = "Water"
 
     def water_plant(self):
         try:
