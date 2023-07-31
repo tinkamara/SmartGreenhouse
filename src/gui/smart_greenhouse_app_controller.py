@@ -30,6 +30,7 @@ class SmartGreenhouseAppController:
             print("done")
             for plant in greenhouse_zone["plants"]:
                 plant_controller = PlantFactory.create_plant(plant["name"], plant["type"], zone_controller.zone_model, plant["ideal_soil_humidity"], plant["uv_lamp_scale"])
+                zone_controller.add_plant(plant["name"], plant["type"], plant["ideal_soil_humidity"], plant["uv_lamp_scale"])
         self.handle_model_change()
 
     def run(self):
